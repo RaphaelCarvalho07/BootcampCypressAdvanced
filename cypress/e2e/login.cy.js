@@ -1,3 +1,6 @@
+import loginPage from '../support/pages/Login'
+import mapPage from '../support/pages/Map'
+
 describe('login', () => {
 
   context('com credenciais válidas', () => {
@@ -7,8 +10,11 @@ describe('login', () => {
         instagram: '@raphilskerj',
         password: 'pwd123'
       }
-      cy.login(user)
-      cy.loggedUser('Raphael')
+      loginPage.go()
+      loginPage.form(user)
+      loginPage.submit()
+
+      mapPage.loggedUser('Raphael')
     })
   })
 
@@ -18,8 +24,10 @@ describe('login', () => {
         instagram: '@raphilskerj',
         password: '123456'
       }
-      cy.login(user)
-      cy.modalHaveText('Credenciais inválidas, tente novamente!')
+      loginPage.go()
+      loginPage.form(user)
+      loginPage.submit()
+      loginPage.modal.haveText('Credenciais inválidas, tente novamente!')
     })
   })
 
@@ -29,53 +37,43 @@ describe('login', () => {
         instagram: '@raphilskerj',
         password: '123456'
       }
-      cy.login(user)
-      cy.modalHaveText('Credenciais inválidas, tente novamente!')
+      loginPage.go()
+      loginPage.form(user)
+      loginPage.submit()
+      loginPage.modal.haveText('Credenciais inválidas, tente novamente!')
     })
   })
 
 
   context('sem informar código do instagram', () => {
-    it('deve informar que código do instagram é obrigatório', () => {
+    it('instagram deve ser obrigatório', () => {
       const user = {
         password: "pwd123"
       }
-
-      cy.visit('/')
-
-
-      cy.get('input[name=password]').type(user.password)
-
-      cy.contains('button', 'Entrar').click()
-
-      cy.modalHaveText('Por favor, informe o seu código do Instagram!')
+      loginPage.go()
+      loginPage.form(user)
+      loginPage.submit()
+      loginPage.modal.haveText('Por favor, informe o seu código do Instagram!')
     })
   })
 
   context('sem informar senha', () => {
-    it('deve informar que a senha é obrigatória', () => {
+    it('senha deve ser obrigatório', () => {
       const user = {
         instagram: "@raphilskerj"
       }
-
-      cy.visit('/')
-
-      cy.get('input[name=instagram]').type(user.instagram)
-
-      cy.contains('button', 'Entrar').click()
-
-      cy.modalHaveText('Por favor, informe a sua senha secreta!')
+      loginPage.go()
+      loginPage.form(user)
+      loginPage.submit()
+      loginPage.modal.haveText('Por favor, informe a sua senha secreta!')
     })
   })
 
   context('sem informar nenhum dos campos', () => {
-    it('deve solicitar para informar as credenciais', () => {
-
-      cy.visit('/')
-      
-      cy.contains('button', 'Entrar').click()
-
-      cy.modalHaveText('Por favor, informe suas credenciais!')
+    it('todos campos devem ser  obrigatórios', () => {
+      loginPage.go()
+      loginPage.submit()
+      loginPage.modal.haveText('Por favor, informe suas credenciais!')
     })
   })
 })
