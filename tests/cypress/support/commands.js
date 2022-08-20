@@ -23,3 +23,26 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('apiResetUser', (instagram) => {
+    cy.request({
+        method: 'DELETE',
+        url: 'http://localhost:3333/helpers-reset',
+        qs: { instagram: instagram },
+        failOnStatusCode: false
+    }).then(res => {
+        expect(res.status).to.eq(204)
+    })
+})
+
+Cypress.Commands.add('apiCreateUser', (payload) => {
+    cy.apiResetUser(payload.instagram)
+
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:3333/signup',
+        body: payload
+    }).then(res => {
+        expect(res.status).to.eq(201)
+    })
+})
