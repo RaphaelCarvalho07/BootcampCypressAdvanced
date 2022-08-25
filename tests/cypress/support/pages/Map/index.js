@@ -5,5 +5,11 @@ class MapPage {
             .should('be.visible')
             .should('have.text', `Olá, ${name}`)
     }
+
+    goToFoodTruckForm() {
+        cy.get('a[href="/foodtrucks/create"]')
+            .should('be.visible')
+            .click()
+    }
 }
 export default new MapPage()
