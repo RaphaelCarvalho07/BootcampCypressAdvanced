@@ -4,12 +4,14 @@ import mapPage from '../support/pages/Map'
 describe('login', () => {
 
   context('com credenciais válidas', () => {
+    const user = {
+      name: 'Raphael',
+      instagram: '@raphilskerj',
+      password: 'pwd123'
+    }
+
     it('deve logar com sucesso', () => {
-      const user = {
-        name: 'Raphael',
-        instagram: '@raphilskerj',
-        password: 'pwd123'
-      }
+      cy.apiCreateUser(user)
       loginPage.go()
       loginPage.form(user)
       loginPage.submit()

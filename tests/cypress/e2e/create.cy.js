@@ -26,7 +26,5 @@ describe('Recomendação', () => {
         createPage.form(foodtruck)
         createPage.submit()
         createPage.modal.haveText('Food truck cadastrado com sucesso!')
-        
-        cy.wait(5000)
     })
 })
