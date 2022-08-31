@@ -26,6 +26,22 @@
 import loginPage from './pages/Login'
 import mapPage from './pages/Map'
 
+Cypress.Commands.add('apiLogin', (user) => {
+    const payload = {
+        instagram: user.instagram,
+        password: user.password
+}
+
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:3333/sessions',
+        body: payload
+    }).then(res => {
+        expect(res.status).to.eq(200)
+        Cypress.env('token', res.body.token)
+    })
+})
+
 Cypress.Commands.add('apiResetUser', (instagram) => {
     cy.request({
         method: 'DELETE',
@@ -34,6 +50,20 @@ Cypress.Commands.add('apiResetUser', (instagram) => {
         failOnStatusCode: false
     }).then(res => {
         expect(res.status).to.eq(204)
+    })
+})
+
+Cypress.Commands.add('apiCreateFoodTruck', (payload) => {
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:3333/foodtrucks',
+        headers: {
+            authorization: Cypress.env('token')
+        },
+        body: payload,
+        failOnStatusCode: false
+    }).then(res => {
+        expect(res.status).to.eq(201)
     })
 })
 
