@@ -11,8 +11,8 @@ describe('Recomendação', () => {
         }
 
         const foodtruck = {
-            latitude: '-22.98956780704664',
-            longitude: '-43.43384742736817',
+            latitude: '-22.989385087810593',
+            longitude: '-43.433321714401245',
             name: 'Gamers Burguers',
             details: 'O melhor hamburguer temático da sua região',
             opening_hours: '14h às 00h',
@@ -56,7 +56,7 @@ describe('Recomendação', () => {
         createPage.modal.haveText('Esse food truck já foi cadastrado!')
     })
 
-    it.only('todos os campos são obrigatórios', () => {
+    it('todos os campos são obrigatórios', () => {
         const user = {
             name: 'Milady',
             instagram: '@milady',

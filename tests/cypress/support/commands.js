@@ -81,7 +81,7 @@ Cypress.Commands.add('apiCreateUser', (payload) => {
 
 Cypress.Commands.add('uiLogin', (user) => {
 
-    loginPage.go()
+    loginPage.go('-22.98981', '-43.43618')
     loginPage.form(user)
     loginPage.submit()
 
